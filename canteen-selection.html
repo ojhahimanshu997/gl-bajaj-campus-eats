@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Canteen Selection</title>
+  <link rel="stylesheet" href="canteen-selection.css" />
+</head>
+<body>
+  <div class="overlay">
+    <div class="form-card">
+      <img src="images/campas eats logo.jpg" alt="Canteen Logo" class="logo" />
+      <h1>Select Your Canteen</h1>
+      <form id="canteen-form">
+        <label for="canteen">Choose a Canteen:</label>
+        <select id="canteen" required>
+          <option value="">-- Select Canteen --</option>
+          <option value="Canteen A">GL BAJAJ BCA/BBA CANTEEN</option>
+          <option value="Canteen B">GL BAJAJ MBA CANTEEN</option>
+          <option value="Canteen C">GL BAJAJ B TECH CANTEEN</option>
+        </select>
+        <button type="button" onclick="goToMenuPage()">Next</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function goToMenuPage() {
+      const canteen = document.getElementById('canteen').value;
+      if (!canteen) {
+        alert("Please select a canteen.");
+        return;
+      }
+      localStorage.setItem('canteen', canteen);
+      window.location.href = 'canteen-menu.html';
+    }
+  </script>
+</body>
+</html>

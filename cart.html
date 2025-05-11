@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Cart - Campus Eats</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(45deg, #1c1111, #193b4e, #9e9321);
+      color: #fff;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      color: #ffd700;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    #cart-items {
+      list-style: none;
+      padding: 0;
+    }
+
+    .cart-item {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease;
+    }
+
+    .cart-item:hover {
+      transform: scale(1.02);
+    }
+
+    .item-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .remove-btn {
+      padding: 6px 14px;
+      border: none;
+      border-radius: 20px;
+      background: #ff4444;
+      color: white;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.3s ease;
+    }
+
+    .remove-btn:hover {
+      background: #e60000;
+    }
+
+    .total-price {
+      font-size: 1.5rem;
+      text-align: center;
+      margin-top: 30px;
+      font-weight: bold;
+      color: #00ffcc;
+    }
+
+    .proceed-btn {
+      display: block;
+      margin: 30px auto 0;
+      padding: 15px 40px;
+      background: #ff3c3c;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .proceed-btn:hover {
+      background: #e60000;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 600px) {
+      .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .cart-item span {
+        margin: 5px 0;
+      }
+
+      .remove-btn {
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="images/campas eats logo.jpg" alt="Canteen Logo" class="logo">
+      <h1>🛒 Your Cart</h1>
+    </header>
+
+    <main>
+      <ul id="cart-items">
+        <!-- Cart items added via JS -->
+      </ul>
+
+      <div class="total-price">
+        Total Price: ₹<span id="total-price">0</span>
+      </div>
+
+      <button class="proceed-btn" onclick="window.location.href='payment.html'">Proceed to Payment</button>
+    </main>
+  </div>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartList = document.getElementById('cart-items');
+    const totalEl = document.getElementById('total-price');
+
+    function renderCart() {
+      cartList.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const li = document.createElement('li');
+        li.className = 'cart-item';
+        li.innerHTML = `
+          <div class="item-info">
+            <span>🍽️ ${item.name} (x${item.quantity})</span>
+            <span>₹${item.price * item.quantity}</span>
+          </div>
+          <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+        `;
+        total += item.price * item.quantity;
+        cartList.appendChild(li);
+      });
+
+      totalEl.textContent = total;
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      renderCart();
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>

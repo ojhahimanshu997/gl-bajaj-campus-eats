@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Enter Details</title>
+  <link rel="stylesheet" href="enter-details.css" />
+</head>
+<body>
+  <div class="overlay">
+    <div class="form-card">
+      <img src="images/campas eats logo.jpg" alt="Logo" class="logo" />
+      <h1>Enter Your Details</h1>
+      <form onsubmit="return saveDetails()">
+        <input type="text" id="name" placeholder="Name" required />
+        <input type="text" id="class" placeholder="Class" required />
+        <input type="text" id="phone" placeholder="Phone Number" required />
+        <button type="submit">Next</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function saveDetails() {
+      const name = document.getElementById('name').value;
+      const userClass = document.getElementById('class').value;
+      const phone = document.getElementById('phone').value;
+
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(phone)) {
+        alert('Please enter a valid 10-digit phone number');
+        return false;
+      }
+
+      localStorage.setItem('name', name);
+      localStorage.setItem('class', userClass);
+      localStorage.setItem('phone', phone);
+      window.location.href = 'canteen-selection.html';
+      return false;
+    }
+  </script>
+</body>
+</html>

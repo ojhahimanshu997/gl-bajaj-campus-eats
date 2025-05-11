@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>College Canteen Menu</title>
+  <link rel="stylesheet" href="canteen-menu.css" />
+</head>
+<body>
+  <div class="overlay">
+    <header>
+      <img src="images/campas eats logo.jpg" alt="Canteen Logo" class="logo">
+      <h1>College Canteen Menu</h1>
+    </header>
+
+    <main>
+      <ul class="menu-list">
+        <li class="menu-item">
+          <img src="images/samosa.jpg" alt="Samosa">
+          <div class="item-details">
+            <h2>Samosa</h2>
+            <span class="price">₹10</span>
+          </div>
+          <input type="number" id="samosa-qty" class="quantity-input" min="0" placeholder="Quantity" />
+          <button class="add-to-cart" onclick="addToCart('Samosa', 10, document.getElementById('samosa-qty').value)">Add to Cart</button>
+        </li>
+
+        <li class="menu-item">
+          <img src="images/tea.jpg" alt="Tea">
+          <div class="item-details">
+            <h2>Tea</h2>
+            <span class="price">₹10</span>
+          </div>
+          <input type="number" id="tea-qty" class="quantity-input" min="0" placeholder="Quantity" />
+          <button class="add-to-cart" onclick="addToCart('Tea', 10, document.getElementById('tea-qty').value)">Add to Cart</button>
+        </li>
+
+        <li class="menu-item">
+          <img src="images/pasta.jpg" alt="Pasta">
+          <div class="item-details">
+            <h2>Pasta</h2>
+            <span class="price">₹60</span>
+          </div>
+          <input type="number" id="pasta-qty" class="quantity-input" min="0" placeholder="Quantity" />
+          <button class="add-to-cart" onclick="addToCart('Pasta', 60, document.getElementById('pasta-qty').value)">Add to Cart</button>
+        </li>
+
+        <li class="menu-item">
+          <img src="images/sandwitch.webp" alt="Sandwich">
+          <div class="item-details">
+            <h2>Sandwich</h2>
+            <span class="price">₹50</span>
+          </div>
+          <input type="number" id="sandwich-qty" class="quantity-input" min="0" placeholder="Quantity" />
+          <button class="add-to-cart" onclick="addToCart('Sandwich', 50, document.getElementById('sandwich-qty').value)">Add to Cart</button>
+        </li>
+
+        <li class="menu-item">
+          <img src="images/alloo patty.webp" alt="Aloo Patty">
+          <div class="item-details">
+            <h2>Aloo Patty</h2>
+            <span class="price">₹40</span>
+          </div>
+          <input type="number" id="aloo-qty" class="quantity-input" min="0" placeholder="Quantity" />
+          <button class="add-to-cart" onclick="addToCart('Aloo Patty', 40, document.getElementById('aloo-qty').value)">Add to Cart</button>
+        </li>
+      </ul>
+
+      <div class="go-cart-container">
+        <button class="go-cart" onclick="window.location.href='cart.html'">Go to Cart</button>
+      </div>
+      
+    </main>
+  </div>
+
+  <script>
+    function addToCart(itemName, itemPrice, quantity) {
+      quantity = parseInt(quantity);
+      if (!quantity || quantity <= 0) {
+        alert('Please enter a valid quantity.');
+        return;
+      }
+
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      let existingItem = cart.find(item => item.name === itemName);
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        cart.push({ name: itemName, price: itemPrice, quantity });
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${itemName} added to cart!`);
+    }
+  </script>
+</body>
+</html>

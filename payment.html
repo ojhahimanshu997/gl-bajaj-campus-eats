@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Proceed with Payment</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body, html {
+  background: linear-gradient(45deg, #1c1111, #193b4e, #9e9321);
+  min-height: 100vh;
+  color: white;
+  overflow-y: auto; /* 👈 enables scrolling */
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 40px 20px;
+  text-align: center;
+  min-height: 100vh; /* 👈 ensures full height for scrolling */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid white;
+      margin-bottom: 20px;
+    }
+
+    .main-heading {
+      font-size: 2rem;
+      margin-bottom: 25px;
+    }
+
+    .payment-summary {
+      font-size: 1.3rem;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .upi-qr-container {
+      margin-top: 30px;
+    }
+
+    .qr-heading {
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .upi-qr-code {
+      width: 220px;
+      height: 220px;
+      object-fit: contain;
+      border-radius: 12px;
+      border: 3px solid white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    .transaction-id-container {
+      margin: 35px 0 20px;
+      text-align: left;
+    }
+
+    .label-text {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.15);
+      color: white;
+    }
+
+    .input-field::placeholder {
+      color: #dddddd;
+    }
+
+    .submit-btn {
+      background-color: #00c853;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .submit-btn:hover {
+      background-color: #00a147;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <img src="images/campas eats logo.jpg" alt="Canteen Logo" class="logo">
+    </header>
+
+    <main>
+      <h1 class="main-heading">Proceed with Payment</h1>
+
+      <div class="payment-summary">
+        <p>Your total amount is: <span id="final-amount">₹0</span></p>
+      </div>
+
+      <div class="upi-qr-container">
+        <h3 class="qr-heading">Scan the UPI QR Code to Pay</h3>
+        <img src="images/QR Code.jpg" alt="UPI QR Code" class="upi-qr-code">
+      </div>
+
+      <div class="transaction-id-container">
+        <label for="transaction-id" class="label-text">Enter Transaction ID for Confirmation:</label>
+        <input type="text" id="transaction-id" class="input-field" placeholder="Enter your transaction ID" required>
+      </div>
+
+      <button id="submit-payment-button" class="submit-btn" onclick="submitPayment()">Confirm Payment</button>
+    </main>
+  </div>
+
+  <script>
+    function loadPayment() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let totalAmount = 0;
+
+      cart.forEach(item => {
+        totalAmount += item.price * item.quantity;
+      });
+
+      document.getElementById('final-amount').innerText = "₹" + totalAmount;
+    }
+
+    window.onload = loadPayment;
+
+    function submitPayment() {
+      const transactionId = document.getElementById('transaction-id').value.trim();
+
+      if (!transactionId) {
+        alert("Please enter the transaction ID for confirmation.");
+        return;
+      }
+
+      alert("✅ Payment Successful! Transaction ID: " + transactionId);
+      localStorage.removeItem('cart');
+      window.location.href = 'thankyou.html';
+    }
+  </script>
+
+</body>
+</html>
